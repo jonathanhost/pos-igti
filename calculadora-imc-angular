@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="imcApp">
+  <head>
+    <script src="https://code.angularjs.org/1.3.5/angular.min.js"></script>
+    <!-- Compiled and minified CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body ng-controller="ImcController">
+    <h1>Calculadora de IMC</h1>
+    <input type="number" ng-model="peso" placeholder="Peso" />
+    <input type="number" ng-model="altura" placeholder="Altura" />
+    <button ng-click="calculaImc()" class="btn btn-primary">
+      Calcular IMC
+    </button>
+    <div ng-show="exibeResultados">
+      <hr />
+      <div>IMC: {{ imc | number }}</div>
+      <div>Situação: {{ situacao }}</div>
+    </div>
+    <script>
+      angular
+        .module("imcApp", [])
+        .controller("ImcController", function ($scope) {
+          $scope.calculaImc = function () {
+            $scope.imc = $scope.peso / ($scope.altura * $scope.altura);
+            if ($scope.imc < 18.5) {
+              $scope.situacao = "Abaixo do peso";
+            } else if ($scope.imc >= 18.5 && $scope.imc < 30) {
+              $scope.situacao = "Peso normal";
+            } else if ($scope.imc >= 30) {
+              $scope.situacao = "Obesidade";
+            }
+            $scope.exibeResultados = true;
+          };
+        });
+    </script>
+  </body>
+</html>
